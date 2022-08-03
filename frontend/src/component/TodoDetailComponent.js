@@ -1,17 +1,29 @@
 export class TodoDetailComponent{
 
-    constructor(){
+    constructor(todo){
+        let title = '';
+        let detail = '';
+        let dueDate = '';
+        if(todo != undefined){
+            title = todo.title;
+            detail = todo.detail;
+            dueDate = todo.dueDate;
+        }
         const html = `
             <div class="card">
                 <div class="card-header">Detail</div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" disabled readonly>
-                    </input>
+                        <label for="dueDate" class="form-label">Due date</label>
+                        <input type="text" class="form-control" id="dueDate" value="${dueDate}" disabled readonly>
+                    </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled readonly></textarea>
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" value="${title}" disabled readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="detail" class="form-label">Detail</label>
+                        <textarea class="form-control" id="detail" value="${detail}" rows="3" disabled readonly></textarea>
                     </div>
                 </div>
             </div>
