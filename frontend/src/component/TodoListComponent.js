@@ -1,7 +1,12 @@
+import { todoPageStore } from "../store/TodoPageStore.js";
+
 export class TodoListComponent{
 
-    constructor(){
-        const html = `
+    renderPage = (todos) => {
+
+        console.log(todos);
+
+        let html = `
             <div class="card">
                 <div class="card-header">Todos</div>
                 <div class="card-body">
@@ -12,16 +17,26 @@ export class TodoListComponent{
                         </div>
                     </form>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">An item</li>
-                        <li class="list-group-item">A second item</li>
-                        <li class="list-group-item">A third item</li>
-                        <li class="list-group-item">A fourth item</li>
-                        <li class="list-group-item">And a fifth one</li>
-                    </ul>
-                </div>
-            </div>
         `;
 
+        if(todos != undefined){
+            todos.forEach(todo => {
+                html += `<li class="list-group-item">${todo.title}</li>`;
+            });
+        }
+
+        html += `</ul></div></div>`;
+
         document.getElementById("my-todo-list").innerHTML = html;
+    }
+
+    constructor(){
+
+        // rendering this page
+        this.renderPage.call();
+
+        // set event listner
+        // this listner will be called when todo list is updated.
+        todoPageStore.addChangeListner(this,this.renderPage);
     }
 }
