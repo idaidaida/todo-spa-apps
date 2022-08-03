@@ -17,7 +17,7 @@ export class TodoListComponent{
         `;
         if(todos != undefined){
             todos.forEach(todo => {
-                html += `<li class="list-group-item">${todo.title}</li>`;
+                html += `<li class="list-group-item"><div class="ml-auto text-muted text-sm fw-light"><small>Due: ${todo.due_date}</small></div><div>${todo.title}</div></li>`;
             });
         }
         html += `</ul></div></div>`;
