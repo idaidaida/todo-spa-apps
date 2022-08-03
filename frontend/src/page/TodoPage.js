@@ -2,6 +2,7 @@ import { HeaderComponent } from "../component/HeaderComponent.js";
 import { TodoSummaryPanelComponent } from "../component/TodoSummaryPanelComponent.js";
 import { TodoListComponent } from "../component/TodoListComponent.js";
 import { TodoDetailComponent } from "../component/TodoDetailComponent.js";
+import { callApi } from "../util/Util.js";
 
 export class TodoPage{
 
@@ -35,5 +36,19 @@ export class TodoPage{
         let summaryPanelComponent = new TodoSummaryPanelComponent();
         let todoListComponent = new TodoListComponent();
         let todoDetailComponent = new TodoDetailComponent();
+
+        // fetch data
+        this.load();
     }
+
+    async load(){
+        try {
+            let todos = await callApi("http://localhost:3000/todos");
+            // set todo list to store.
+            // XXX
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
 }
