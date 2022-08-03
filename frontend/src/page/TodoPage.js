@@ -2,7 +2,6 @@ import { HeaderComponent } from "../component/HeaderComponent.js";
 import { TodoSummaryPanelComponent } from "../component/TodoSummaryPanelComponent.js";
 import { TodoListComponent } from "../component/TodoListComponent.js";
 import { TodoDetailComponent } from "../component/TodoDetailComponent.js";
-import { callApi } from "../util/Util.js";
 import { todoPageStore } from "../store/TodoPageStore.js"
 
 export class TodoPage{
@@ -17,9 +16,7 @@ export class TodoPage{
                         <h1>Todo</h1>
                     </div>
                 </div>
-        
                 <div id="my-summary-panel"></div>
-        
                 <div class="row mt-3">
                     <div class="col">
                         <div id="my-todo-list"></div>
@@ -44,8 +41,7 @@ export class TodoPage{
 
     async load(){
         try {
-            let todos = await callApi("http://localhost:3000/todos");
-            todoPageStore.setTodos(todos);
+            todoPageStore.fetchTodos();
         } catch (error) {
             console.log(error.message);
         }
