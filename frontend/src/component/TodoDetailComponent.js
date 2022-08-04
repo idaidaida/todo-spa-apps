@@ -1,13 +1,16 @@
+import { todoPageStore } from "../store/TodoPageStore.js";
+
 export class TodoDetailComponent{
 
-    constructor(todo){
+    renderPage = (todo) => {
+        console.log(todo);
         let title = '';
         let detail = '';
         let dueDate = '';
         if(todo != undefined){
             title = todo.title;
             detail = todo.detail;
-            dueDate = todo.dueDate;
+            dueDate = todo.due_date;
         }
         const html = `
             <div class="card">
@@ -23,13 +26,18 @@ export class TodoDetailComponent{
                     </div>
                     <div class="mb-3">
                         <label for="detail" class="form-label">Detail</label>
-                        <textarea class="form-control" id="detail" value="${detail}" rows="3" disabled readonly></textarea>
+                        <textarea class="form-control" id="detail" rows="3" disabled readonly>${detail}</textarea>
                     </div>
                 </div>
             </div>
         `;
 
         document.getElementById("my-todo-detail").innerHTML = html;
+    }
+
+    constructor(todo){
+        this.renderPage.call();
+        todoPageStore.addSelectedTodoIdChangeListners(this,this.renderPage);
     }
 
 }
