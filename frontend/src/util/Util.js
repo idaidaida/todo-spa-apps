@@ -24,3 +24,19 @@ export async function postData(url,data){
             }
         });
 }
+
+export async function putData(url,data){
+    const httpHeader = {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+    }
+    return fetch(url,httpHeader)
+        .then( res => {
+            if(res.ok){
+                return res.json();
+            }else{
+                return Promise(new Error("error occured"))
+            }
+        });
+}
