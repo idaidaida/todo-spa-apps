@@ -2,13 +2,15 @@ import { TodoListComponent } from "../component/TodoListComponent.js";
 import { postData,fetchData } from "../util/Util.js";
 class TodoPageStore{
 
-    changeListners = [];
+    todoChangeListners = [];
+    selectedTodoIdChangeListners = [];
     todos = [];
+    selectedTodoId;
 
     async fetchTodos(){
         let todos = await fetchData("http://localhost:3000/todos");
         this.todos = todos;
-        this.executeChangeListner();
+        this.callTodoChangeListner();
     }
 
     async addTodos(todo){
@@ -18,7 +20,13 @@ class TodoPageStore{
         } catch (error) {
             console.log(error.message);
         }
-        this.executeChangeListner();
+        this.callTodoChangeListner();
+    }
+
+    async selectTodo(id){
+        this.selectedTodoId = id;
+        let todo = await fetchData(`http://localhost:3000/todos/${this.selectedTodoId}`);
+        this.callSelectedTodoIdChangeListner(todo);
     }
 
     getTodos(){
@@ -26,12 +34,22 @@ class TodoPageStore{
     }
 
     addChangeListner(targetClass,targetMethod){
-        this.changeListners.push({targetClass,targetMethod});
+        this.todoChangeListners.push({targetClass,targetMethod});
     }
 
-    executeChangeListner(){
-        this.changeListners.forEach(changeListner => {
+    addSelectedTodoIdChangeListners(targetClass,targetMethod){
+        this.selectedTodoIdChangeListners.push({targetClass,targetMethod});
+    }
+
+    callTodoChangeListner(){
+        this.todoChangeListners.forEach(changeListner => {
             changeListner.targetMethod.call(changeListner.targetClass,this.todos);
+        });
+    }
+
+    callSelectedTodoIdChangeListner(todo){
+        this.selectedTodoIdChangeListners.forEach(changeListner => {
+            changeListner.targetMethod.call(changeListner.targetClass,todo);
         });
     }
 
