@@ -40,3 +40,19 @@ export async function putData(url,data){
             }
         });
 }
+
+export async function deleteData(url,data){
+    const httpHeader = {
+        method: "DELETE",
+        body: JSON.stringify(data),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+    }
+    return fetch(url,httpHeader)
+        .then( res => {
+            if(res.ok){
+                return res.json();
+            }else{
+                return Promise(new Error("error occured"))
+            }
+        });
+}

@@ -57,7 +57,7 @@ export class TodoDetailComponent{
                     document.getElementById("title").readOnly = false;
                     document.getElementById("detail").disabled = false;
                     document.getElementById("detail").readOnly = false;
-                    document.getElementById("js-display-update-btn").innerHTML = `<button class="btn btn-primary" id="js-update-btn">Update</button><i class="bi bi-trash px-3 text-danger" id="js-delete" style="cursor: pointer"></i>`;
+                    document.getElementById("js-display-update-btn").innerHTML = `<button class="btn btn-primary" id="js-update-btn">Update</button><i class="bi bi-trash px-3 text-danger" id="js-delete-btn" style="cursor: pointer"></i>`;
 
 
                     document.getElementById("js-update-btn").addEventListener("click",() => {
@@ -65,6 +65,10 @@ export class TodoDetailComponent{
                         let newTitle = document.getElementById("title").value;
                         let newDetail = document.getElementById("detail").value;
                         todoPageStore.updateTodo({id: todo.id, title: newTitle, detail: newDetail, due_date: newDueDate});
+                    })
+
+                    document.getElementById("js-delete-btn").addEventListener("click",() => {
+                        todoPageStore.deleteTodo(todo.id);
                     })
 
 
