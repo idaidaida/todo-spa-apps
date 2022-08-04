@@ -1,5 +1,5 @@
 import { TodoListComponent } from "../component/TodoListComponent.js";
-import { postData,fetchData,putData } from "../util/Util.js";
+import { postData,fetchData,putData,deleteData } from "../util/Util.js";
 class TodoPageStore{
 
     todoChangeListners = [];
@@ -31,8 +31,15 @@ class TodoPageStore{
     }
 
     async updateTodo(todo){
-        todo = await putData(`http://localhost:3000/todos/${todo.id}`,todo);
-        let todos = await postData("http://localhost:3000/todos",todo);
+        await putData(`http://localhost:3000/todos/${todo.id}`,todo);
+        await fetchData("http://localhost:3000/todos");
+        //this.callSelectedTodoIdChangeListner(todo);
+        this.callTodoChangeListner();
+    }
+
+    async deleteTodo(id){
+        await deleteData(`http://localhost:3000/todos/${id}`,{});
+        await fetchData("http://localhost:3000/todos");
         //this.callSelectedTodoIdChangeListner(todo);
         this.callTodoChangeListner();
     }
